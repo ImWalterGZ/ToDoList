@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+body{
+    font-family: Inter, sans-serif;
+}
+.centerUP{
+    text-align: left;
+    margin-top: 15%;
+    margin-left: 10%;
+}
+.centerUP h1{
+    font-size: 40pt;
+}
+
+.centerUP h2{
+    font-size: 19pt;
+}
+
+
+.listContainer li{
+    font-size: 18pt;
+    
+
+}
