@@ -2,82 +2,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>To do list</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="containerLeft">    
-        <div>
-        <h1>Incredible to do list!</h1>
-        <h2>What are we doing today?</h2>
+    <div class="container-fluid text-center">
+        <div class="row bg-dark bigRow">
+            <div class="col-lg-4 col-sm-12 colBorder justify-content-center align-content-center" id="firstRow">
+                <div>
+                    <label for="taskInput" class="form-label" style="margin: 5%;">What's for today?</label>
+                    <textarea  class="form-control " rows="2" name="taskInput" id="taskInput" ></textarea>
+                    <input id="addTaskBtn" type="submit" class="btn btn-secondary" value="lets get it" style="margin-top:10%">
+                </div>
+            </div>
+            <div class="col-lg-8 col-sm-12 colBorder">
+                    <div class="container addmargin" style="margin:2vw;" id="taskToDo">
+                        <div class="row d-flex gap-2 align-items-center " style="margin:2vh;">
+                            <div class="col-lg-1 btn btn-danger">X</div>
+                            <div class="col-lg-8 text-start align-items-center" id="taskHolder"> hola </div>
+                            <div class="col-lg-2 btn btn-success">ok</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="inputSection">
-        <input type="text" id="newTask" placeholder="Add new task...">
-        <span onclick="newElement()" class="addBtn"><span class="textButton">Add </span> </span>
+
+        <div class="row bg-dark bigRow">
+            <div class="col-lg-3 col-sm-12 colBorder justify-content-center align-content-center">
+            <div class="justify-content-center align-content-center">
+                <h1 style="text-align: center; font-size: 20vw;">0</h1>
+            </div>
+            </div>
+            <div class="col-lg-9 col-sm-12 colBorder">
+            <div class="container addmargin" style="margin:2vw;" id="tasksDone">
+                <div class="row d-flex gap-2 align-items-center">
+                <div class="col-lg-1 btn btn-dark">X</div>
+                <div class="col-lg-8 text-start align-items-center" id="taskHolder"> hola </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        </div>
     </div>
-    </div>
-    <div class="containerRight">
-        <ul class="sticky" id="myUL">
-            <li>Listen to The Score</li>
-            <li>Hit the gym</li>
-            <li>Run for 5k</li>
-            <li>Make dinner</li>
-        </ul>
-    </div>
+</body>
 
 <script>
-    var myNodelist = document.getElementsByTagName("LI");
-    var i;
-    for (i=0; i < myNodelist.length; i++){
-        var span = document.createElement("SPAN");
-        var txt = document.createTextNode("\u00D7");
-        span.className = "close";
-        span.appendChild(txt);
-        myNodelist[i].appendChild(span);
-    }
 
-    var close = document.getElementsByClassName("close");
-    var i;
-    for (i=0; i < close.length; i++){
-        close[i].onclick = function() {
-            var div = this.parentElement;
-            div.style.display = "none"
+document.addEventListener('DOMContentLoaded', function() {
+    const addTaskBtn = document.getElementById('addTaskBtn');
+    const taskInput = document.getElementById('taskInput');
+    const taskToDo = document.getElementById('taskToDo');
+    const completedTasks = document.getElementById('completedTasks');
+
+
+    addTaskBtn.addEventListener('click', function() {
+        const taskText = taskInput.value.trim();
+        if (taskText) {
+            const taskHtml = `
+
+                <div class="row d-flex gap-2 align-items-center "  style="margin:2vh;">
+                            <div class="col-lg-1 btn btn-danger">X</div>
+                            <div class="col-lg-8 text-start align-items-center" id="taskHolder"> ${taskText} </div>
+                            <div class="col-lg-2 btn btn-success">ok</div>
+            `;
+            taskToDo.innerHTML += taskHtml;
+            taskInput.value = '';
+        }
+    });
+
+    taskToDo.addEventListener('click', function(){
+        if (event.target.classList.contains('btn-danger')){
+            const taskRow = event.target.closest('.row');
+        if(taskRow){
+            taskRow.remove();
+            }
+        else if (event.target.classList.contains('btn-success')){
+            const taskRow = event.target.closest('.row');
+            if(taskRow){
+                taskRow.remove();
+                completedTasks.appendChild(taskRow);
+            }
+        }
         }
     }
+)
 
-    var list = document.querySelector('ul');
-    list.addEventListener('click', function(ev){
-        if (ev.target.tagName === 'LI') {
-            ev.target.classList.toggle('checked');
-        }
-    }, false);
 
-    function newElement(){
-        var li = document.createElement("li");
-        var inputValue = document.getElementById("newTask").value;
-        var t = document.createTextNode(inputValue);
-        li.appendChild(t);
-        if(inputValue === ''){
-            alert("you better write something!");
-        } else {
-            document.getElementById("myUL").appendChild(li);
-        }
-        document.getElementById("myInput").value = "";
-        var span = document.createElement("SPAN");
-        var txt = document.createTextNode("\u00D7");
-        span.className = "close";
-        span.appendChild(txt);
-        li.appendChild(span);
 
-        for (i = 0; i < close.length; i++) {
-        close[i].onclick = function() {
-        var div = this.parentElement;
-        div.style.display = "none";
-    }
-}
-}
-    
+});
+
 
 </script>
-</body>
 </html>
+
